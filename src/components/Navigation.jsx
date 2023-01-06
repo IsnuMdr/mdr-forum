@@ -53,7 +53,7 @@ export default function Navigation() {
           ) : (
             <Nav>
               <Nav.Link>
-                <button onClick={() => logout()} className="btn btn-block btn-outline-danger">
+                <button onClick={logout} className="btn btn-block btn-outline-danger">
                   Logout
                 </button>
               </Nav.Link>
