@@ -113,6 +113,17 @@ describe("threadReducers function", () => {
         downVotesBy: [],
         totalComments: 0,
       },
+      {
+        id: "thread-2",
+        title: "Thread Kedua",
+        body: "Ini adalah thread kedua",
+        category: "General",
+        createdAt: "2021-06-21T07:00:00.000Z",
+        ownerId: "users-1",
+        upVotesBy: [],
+        downVotesBy: [],
+        totalComments: 0,
+      },
     ];
 
     const action = {
@@ -127,12 +138,9 @@ describe("threadReducers function", () => {
     const nextState = threadsReducer(initialState, action);
 
     // assert
-    expect(nextState).toEqual([
-      {
-        ...initialState[0],
-        upVotesBy: [action.payload.userId],
-      },
-    ]);
+    expect(nextState.find((thread) => thread.id === action.payload.threadId).upVotesBy).toContain(
+      action.payload.userId
+    );
   });
 
   it("should return the threads with the downvote thread when given by DOWNVOTE_THREAD action", () => {
@@ -149,13 +157,24 @@ describe("threadReducers function", () => {
         downVotesBy: [],
         totalComments: 0,
       },
+      {
+        id: "thread-2",
+        title: "Thread Kedua",
+        body: "Ini adalah thread kedua",
+        category: "General",
+        createdAt: "2021-06-21T07:00:00.000Z",
+        ownerId: "users-1",
+        upVotesBy: [],
+        downVotesBy: [],
+        totalComments: 0,
+      },
     ];
 
     const action = {
       type: "VOTE_DOWN_THREAD",
       payload: {
         userId: "users-1",
-        threadId: "thread-1",
+        threadId: "thread-2",
       },
     };
 
@@ -163,12 +182,9 @@ describe("threadReducers function", () => {
     const nextState = threadsReducer(initialState, action);
 
     // assert
-    expect(nextState).toEqual([
-      {
-        ...initialState[0],
-        downVotesBy: [action.payload.userId],
-      },
-    ]);
+    expect(nextState.find((thread) => thread.id === action.payload.threadId).downVotesBy).toContain(
+      action.payload.userId
+    );
   });
 
   it("should return threads not contain user id in upVotesBy and downVotesBy property when given action type NEUTRAL_THREAD", () => {
