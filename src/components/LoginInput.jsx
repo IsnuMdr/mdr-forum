@@ -24,7 +24,7 @@ function LoginInput({ login }) {
         onChange={onPasswordChange}
         required
       />
-      <button type="button" onClick={() => login({ email, password })}>
+      <button className="btnLogin" type="button" onClick={() => login({ email, password })}>
         Login
       </button>
     </form>
