@@ -17,14 +17,14 @@ describe("Login spec", () => {
     // memverifikasi elemen yang harus tampak pada halaman login
     cy.get('input[placeholder="Input your email"]').should("be.visible");
     cy.get('input[placeholder="Input your password"]').should("be.visible");
-    cy.get("button")
+    cy.get("button.btnLogin")
       .contains(/^Login$/)
-      .should("be.visible");
+      .click();
   });
 
   it("should display alert when Email is empty", () => {
     // klik tombol login tanpa mengisi username
-    cy.get("button")
+    cy.get("button.btnLogin")
       .contains(/^Login$/)
       .click();
 
@@ -39,7 +39,7 @@ describe("Login spec", () => {
     cy.get('input[placeholder="Input your email"]').type("testuser@gmail.com");
 
     // klik tombol login tanpa mengisi password
-    cy.get("button")
+    cy.get("button.btnLogin")
       .contains(/^Login$/)
       .click();
 
@@ -57,7 +57,7 @@ describe("Login spec", () => {
     cy.get('input[placeholder="Input your password"]').type("wrong_password");
 
     // menekan tombol Login
-    cy.get("button")
+    cy.get("button.btnLogin")
       .contains(/^Login$/)
       .click();
 
@@ -65,5 +65,18 @@ describe("Login spec", () => {
     cy.on("window:alert", (str) => {
       expect(str).to.equal("Login failed");
     });
+  });
+
+  it("should display homepage when username and password are correct", () => {
+    // mengisi username
+    cy.get('input[placeholder="Input your email"]').type("isnu@gmail.com");
+
+    // mengisi password yang benar
+    cy.get('input[placeholder="Input your password"]').type("isnu123");
+
+    // menekan tombol Login
+    cy.get("button.btnLogin")
+      .contains(/^Login$/)
+      .click();
   });
 });
